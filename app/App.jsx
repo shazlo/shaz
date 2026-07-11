@@ -54,7 +54,10 @@ useEffect(() => {
 
 useEffect(() => {
   Settings.initializeSDK();
-  Settings.setAdvertiserTrackingEnabled(true);
+  // No App Tracking Transparency / IDFA tracking in v1 (matches "Data Not
+  // Collected" in App Store Connect). Enable ATT + advertiser tracking in a
+  // later version if Facebook ad attribution is needed.
+  Settings.setAdvertiserTrackingEnabled(false);
   Settings.setAutoLogAppEventsEnabled(true);
 
   setTimeout(() => {
