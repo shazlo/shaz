@@ -1221,7 +1221,7 @@ const saveSeenToStorage = () => {
         <LinearGradient
           colors={['#C6A664', '#E3C888', '#F5E3B3']}
           style={{
-            paddingVertical: 8,
+            paddingVertical: 2,
             paddingHorizontal: 16,
             borderRadius: 12,
           }}
