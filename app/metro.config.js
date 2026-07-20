@@ -2,10 +2,12 @@ const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 
 /**
  * Metro configuration
- * https://reactnative.dev/docs/metro
- *
- * @type {import('@react-native/metro-config').MetroConfig}
+ * https://metrobundler.dev/docs/configuration
  */
-const config = {};
+const config = {
+  resolver: {
+    useWatchman: true, // Forces Metro to bypass Watchman entirely
+  },
+};
 
 module.exports = mergeConfig(getDefaultConfig(__dirname), config);

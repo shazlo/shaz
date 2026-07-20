@@ -1164,25 +1164,12 @@ const saveSeenToStorage = () => {
   }}
 >
   {/* LEFT: Brand / Logo */}
-  {!brand ? (
+ 
     <Image
       source={require('../assets/images/shazlo-logo-v4.png')}
       style={styles.logoInsideBar}
     />
-  ) : (
-    <Text
-      numberOfLines={1}
-      // ellipsizeMode="tail"
-      style={{
-        fontSize: 30,
-        fontWeight: '600',
-        maxWidth: '55%',
-        
-      }}
-    >
-      {brand}
-    </Text>
-  )}
+  
    <Animated.Text
   style={{
     fontSize: 13,
@@ -1217,26 +1204,40 @@ const saveSeenToStorage = () => {
     /> */}
 
     {!user.name ? (
-      <TouchableOpacity onPress={() => handleScreenChange('Profile')}>
-        <LinearGradient
-          colors={['#C6A664', '#E3C888', '#F5E3B3']}
-          style={{
-            paddingVertical: 2,
-            paddingHorizontal: 16,
-            borderRadius: 12,
-          }}
-        >
-          <Text
-            style={{
-              fontWeight: '800',
-              fontSize: 14,
-              letterSpacing: 0.6,
-            }}
-          >
-            JOIN NOW
-          </Text>
-        </LinearGradient>
-      </TouchableOpacity>
+  <TouchableOpacity 
+  onPress={() => handleScreenChange('Profile')}
+  style={{
+    marginRight: 10,
+    borderRadius: 12,       
+    overflow: 'hidden',
+    width: 95,              // 1. Force an explicit width large enough for the text
+  }}
+>
+  <LinearGradient
+    colors={['#C6A664', '#E3C888', '#F5E3B3']}
+    style={{
+      height: 36,           // 2. Comfortable height balance
+      width: '100%',        // 3. Fill the forced touchable width completely
+      borderRadius: 12,     
+      alignItems: 'center',
+      justifyContent: 'center', 
+    }}
+  >
+    <Text
+      style={{
+        fontSize: 12,       
+        fontWeight: '800',
+        color: '#000',
+        letterSpacing: 0.3, // 4. Slightly reduced letter spacing to protect edge boundaries
+        textAlign: 'center',
+      }}
+      numberOfLines={1}
+      allowFontScaling={false}
+    >
+      JOIN NOW
+    </Text>
+  </LinearGradient>
+</TouchableOpacity>
     ) : (
       <IconPressButton
       style={{
@@ -1296,9 +1297,8 @@ const saveSeenToStorage = () => {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    // height:180,
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
+                    height:140,
+                    
                   }}
                 >
                   <View style={{ flexDirection: 'row', marginBottom: 10, alignItems: 'center' }}>
@@ -1340,7 +1340,8 @@ const saveSeenToStorage = () => {
                       flexDirection: 'row',
                       alignItems: 'center',
                       // flexWrap: 'wrap',
-                      justifyContent: 'space-between'
+                      justifyContent: 'space-between',
+                      paddingHorizontal:20
                     }}>
                     <Text
                       style={{ fontSize: 15, color: 'white', marginRight: 8, flex: 1 }}
@@ -1561,12 +1562,14 @@ const saveSeenToStorage = () => {
                     bottom: 0,
                     left: 0,
                     right: 0,
+                     height: 140,
+                    //  height: 165,
                     // height:120,
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
+                    // paddingHorizontal: 15,
+                    // paddingVertical: 10,
                   }}
                 >
-                  <View style={{ flexDirection: 'row', marginBottom: 10, alignItems: 'center' }}>
+                  <View style={{ flexDirection: 'row', marginBottom: 10, alignItems: 'center', padding:20 }}>
                     {/* Sizes */}
                     <View style={{ flexDirection: 'row', gap: 10 }}>
                       {items[currentIndex].sizes.map((size) => (
@@ -1648,7 +1651,8 @@ const saveSeenToStorage = () => {
                       flexDirection: 'row',
                       alignItems: 'center',
                       // flexWrap: 'wrap',
-                      justifyContent: 'space-between'
+                      justifyContent: 'space-between',
+                      paddingHorizontal: 20,
                     }}>
                     <Text
                       style={{ fontSize: 15, color: 'white', marginRight: 8, flex: 1 }}

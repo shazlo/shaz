@@ -371,42 +371,40 @@ if(!user?.name)
       
     </Text>
 
-    <TouchableOpacity
-      activeOpacity={0.9}
-      onPress={() => handleScreenChange('Profile')}
-      style={{
-        borderRadius: 14,
-        overflow: 'hidden',
-        shadowColor: '#000',
-        shadowOpacity: 0.3,
-        shadowOffset: { width: 0, height: 4 },
-        shadowRadius: 6,
-      }}
-    >
-      <LinearGradient
-                    colors={['#C6A664', '#E3C888', '#F5E3B3']}   // rich gold gradient
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                    style={{
-                      paddingVertical: 10,
-                      paddingHorizontal: 20,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 12,
-                    }}
-                  >
-        <Text
-          style={{
-            color: 'black',
-            fontWeight: '700',
-            fontSize: 15,
-            letterSpacing: 0.6,
-          }}
-        >
+     <TouchableOpacity 
+     onPress={() => handleScreenChange('Profile')}
+     style={{
+       marginRight: 10,
+       borderRadius: 12,       
+       overflow: 'hidden',
+       width: 95,              // 1. Force an explicit width large enough for the text
+     }}
+   >
+     <LinearGradient
+       colors={['#C6A664', '#E3C888', '#F5E3B3']}
+       style={{
+         height: 36,           // 2. Comfortable height balance
+         width: '100%',        // 3. Fill the forced touchable width completely
+         borderRadius: 12,     
+         alignItems: 'center',
+         justifyContent: 'center', 
+       }}
+     >
+       <Text
+         style={{
+           fontSize: 12,       
+           fontWeight: '800',
+           color: '#000',
+           letterSpacing: 0.3, // 4. Slightly reduced letter spacing to protect edge boundaries
+           textAlign: 'center',
+         }}
+         numberOfLines={1}
+         allowFontScaling={false}
+       >
          JOIN NOW
-        </Text>
-      </LinearGradient>
-    </TouchableOpacity>
+       </Text>
+     </LinearGradient>
+   </TouchableOpacity>
   </View>
   )
 }

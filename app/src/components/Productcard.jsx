@@ -265,6 +265,7 @@ const ProductCard = ({ item, visible, onClose }) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-between',
+                    padding:20
                   }}
                 >
                   <Text
@@ -377,8 +378,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
+    height: 140,
+    // paddingHorizontal: 15,
+    // paddingVertical: 10,
   },
   dotsContainer: {
     position: 'absolute',

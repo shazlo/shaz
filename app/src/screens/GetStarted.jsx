@@ -355,7 +355,7 @@ if (!response.ok) {
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 24, backgroundColor: '#fff', flex: 1 },
+  container: { padding: 24, backgroundColor: '#fff', flex: 1, marginTop:30 },
   logo: {
     fontSize: 46,
     alignSelf: 'center',

@@ -972,9 +972,7 @@ export default function SwipeUI({ brand, closet, closets, setclosets, setClosets
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    // height:180,
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
+                    height:140
                   }}
                 >
                   <View style={{ flexDirection: 'row', marginBottom: 10, alignItems: 'center' }}>
@@ -1005,18 +1003,19 @@ export default function SwipeUI({ brand, closet, closets, setclosets, setClosets
                     </View>
 
                     {/* Size Chart Link */}
-                    <TouchableOpacity onPress={() => console.log('Open Size Chart')}>
+                    {/* <TouchableOpacity onPress={() => console.log('Open Size Chart')}>
                       <Text style={{ fontSize: 14, color: '#ffffffff', textDecorationLine: 'underline', marginLeft: 10 }}>
                         Size Chart
                       </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                   </View>
                   <View
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
                       // flexWrap: 'wrap',
-                      justifyContent: 'space-between'
+                      justifyContent: 'space-between',
+                      padding:20
                     }}>
                     <Text
                       style={{ fontSize: 15, color: 'white', marginRight: 8, flex: 1 }}
@@ -1236,9 +1235,8 @@ export default function SwipeUI({ brand, closet, closets, setclosets, setClosets
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    // height:180,
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
+                    height:140,
+                    
                   }}
                 >
                   <View style={{ flexDirection: 'row', marginBottom: 10, alignItems: 'center' }}>
@@ -1269,11 +1267,7 @@ export default function SwipeUI({ brand, closet, closets, setclosets, setClosets
                     </View>
 
                     {/* Size Chart Link */}
-                    <TouchableOpacity onPress={() => console.log('Open Size Chart')}>
-                      <Text style={{ fontSize: 14, color: '#ffffffff', textDecorationLine: 'underline', marginLeft: 10 }}>
-                        Size Chart
-                      </Text>
-                    </TouchableOpacity>
+                    
 
                     <View style={{ flexDirection: 'row', marginTop: 0, }}>
                       {/* <ColorSelector
@@ -1290,7 +1284,8 @@ export default function SwipeUI({ brand, closet, closets, setclosets, setClosets
                       flexDirection: 'row',
                       alignItems: 'center',
                       // flexWrap: 'wrap',
-                      justifyContent: 'space-between'
+                      justifyContent: 'space-between',
+                      padding:20
                     }}>
                     <Text
                       style={{ fontSize: 15, color: 'white', marginRight: 8, flex: 1 }}

@@ -66,7 +66,7 @@ useEffect(() => {
   }, 5000);
 }, []);
 
-
+console.log("hello1")
 
 // useEffect(async()=>{
 // await AsyncStorage.setItem('tutorialCompleted','false')
