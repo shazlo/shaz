@@ -360,8 +360,8 @@ const SelectClosetSheet = forwardRef(
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
                     style={{
-                      paddingVertical: 10,
-                      paddingHorizontal: 20,
+                      // paddingVertical: 10,
+                      // paddingHorizontal: 20,
                       alignItems: 'center',
                       justifyContent: 'center',
                       borderRadius: 12,
@@ -374,6 +374,7 @@ const SelectClosetSheet = forwardRef(
                           fontSize: 15,
                           letterSpacing: 0.7,
                           textTransform: 'uppercase',
+                          padding:20
                         }}
                       >
                         Join Now

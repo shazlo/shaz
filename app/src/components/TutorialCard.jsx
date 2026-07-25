@@ -143,14 +143,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    paddingHorizontal: 15,
-    paddingVertical: 10
+    height:140
   },
 
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    padding:20
   },
 
   title: {

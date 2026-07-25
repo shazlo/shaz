@@ -12,6 +12,7 @@ import {
   BackHandler,
   Share,
   ActivityIndicator,
+  Pressable,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,85 +23,85 @@ import SwipeUI from '../screens/SwipeUIDiscover';
 import { finishCartUpdate, setCartCount, startCartUpdate } from '../store/cartSlice';
 import { API_BASE_URL } from '../config/api';
 
-const { width,height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const ClosetDets = ({ closetData, visible, onClose, setClosets, setclosetshome, closets }) => {
   const [closet, setCloset] = useState(null);
   const [selectedItems, setSelectedItems] = useState({});
   const [expanded, setExpanded] = useState(false);
-  const user=useSelector((state)=>state.auth.user)
-  const dispatch=useDispatch();
-  const {count:cartCount, isUpdating}=useSelector((state)=>state.cart)
+  const user = useSelector((state) => state.auth.user)
+  const dispatch = useDispatch();
+  const { count: cartCount, isUpdating } = useSelector((state) => state.cart)
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const colorAnim = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const titleFade = useRef(new Animated.Value(1)).current; // for closet name
-const similarFade = useRef(new Animated.Value(0)).current; // for similar text
+  const similarFade = useRef(new Animated.Value(0)).current; // for similar text
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [showAllItems, setShowAllItems] = useState(false);
- const selectedItemIds = Object.keys(selectedItems).filter(
-  (id) => selectedItems[id] === true
-);
-  const [showprod, setshowprod]=useState();
-const handleDeletePress = () => {
-  if (selectedItemIds.length > 0) {
-    deleteSelectedItems();
-  } else {
-    setConfirmVisible(true); // delete entire closet
-  }
-};
+  const selectedItemIds = Object.keys(selectedItems).filter(
+    (id) => selectedItems[id] === true
+  );
+  const [showprod, setshowprod] = useState();
+  const handleDeletePress = () => {
+    if (selectedItemIds.length > 0) {
+      deleteSelectedItems();
+    } else {
+      setConfirmVisible(true); // delete entire closet
+    }
+  };
 
-const deleteSelectedItems = async () => {
-  // 1️⃣ Optimistic UI update – current closet
-  setCloset((prev) => ({
-    ...prev,
-    items: prev.items.filter(
-      (item) => !selectedItemIds.includes(item.item_id)
-    ),
-  }));
+  const deleteSelectedItems = async () => {
+    // 1️⃣ Optimistic UI update – current closet
+    setCloset((prev) => ({
+      ...prev,
+      items: prev.items.filter(
+        (item) => !selectedItemIds.includes(item.item_id)
+      ),
+    }));
 
-  // 2️⃣ Optimistic UI update – closets list
-  setClosets((prevClosets) =>
-    prevClosets.map((c) =>
-      c.closet_id === closet.closet_id
-        ? {
+    // 2️⃣ Optimistic UI update – closets list
+    setClosets((prevClosets) =>
+      prevClosets.map((c) =>
+        c.closet_id === closet.closet_id
+          ? {
             ...c,
             items: c.items.filter(
               (item) => !selectedItemIds.includes(item.item_id)
             ),
           }
-        : c
-    )
-  );
-
-  // 3️⃣ Clear selection
-  setSelectedItems({});
-
-  try {
-    const response = await fetch(
-      `${API_BASE_URL}/v1/closets/delete-item`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          user_id: user.user_id,
-          closet_id: closet.closet_id,
-          item_ids: selectedItemIds,
-        }),
-      }
+          : c
+      )
     );
 
-    const result = await response.json();
+    // 3️⃣ Clear selection
+    setSelectedItems({});
 
-    if (!response.ok) {
-      console.log("❌ Failed to delete items:", result.error);
-      // optional rollback here if you want
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/v1/closets/delete-item`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: user.user_id,
+            closet_id: closet.closet_id,
+            item_ids: selectedItemIds,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.log("❌ Failed to delete items:", result.error);
+        // optional rollback here if you want
+      }
+    } catch (error) {
+      console.log("⚠️ Error deleting items:", error);
+      // optional rollback here
     }
-  } catch (error) {
-    console.log("⚠️ Error deleting items:", error);
-    // optional rollback here
-  }
-};
+  };
 
 
 
@@ -110,80 +111,80 @@ const deleteSelectedItems = async () => {
     extrapolate: 'clamp',
   });
 
- const expand = () => {
-  setExpanded(true);
-  fadeAnim.setValue(0);
+  const expand = () => {
+    setExpanded(true);
+    fadeAnim.setValue(0);
     setShowAllItems(false);
-  // text crossfade
-  Animated.sequence([
-    Animated.timing(titleFade, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: true,
-    }),
-    Animated.timing(similarFade, {
-      toValue: 1,
-      duration: 400,
-      useNativeDriver: true,
-    }),
-  ]).start();
+    // text crossfade
+    Animated.sequence([
+      Animated.timing(titleFade, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(similarFade, {
+        toValue: 1,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+    ]).start();
 
-  // existing animations
-  Animated.parallel([
-    Animated.timing(scaleAnim, {
-      toValue: 55,
-      duration: 600,
-      useNativeDriver: false,
-    }),
-    Animated.timing(colorAnim, {
-      toValue: 1,
-      duration: 600,
-      useNativeDriver: false,
-    }),
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 800,
-      useNativeDriver: true,
-    }),
-  ]).start();
-
-  
-};
-
-useEffect(() => {
-  let timer;
-  if (visible) {
-    timer = setTimeout(() => {
-      setShowAllItems(true);
-      console.log("✅ showAllItems set to true via timeout");
-    }, 600); // match total animation duration (600–800ms)
-  } else {
-    setShowAllItems(false);
-  }
-
-  return () => clearTimeout(timer);
-}, [visible]);
+    // existing animations
+    Animated.parallel([
+      Animated.timing(scaleAnim, {
+        toValue: 55,
+        duration: 600,
+        useNativeDriver: false,
+      }),
+      Animated.timing(colorAnim, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: false,
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 800,
+        useNativeDriver: true,
+      }),
+    ]).start();
 
 
-const crumble = () => {
-  Animated.parallel([
-    Animated.timing(scaleAnim, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: false,
-    }),
-    Animated.timing(colorAnim, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: false,
-    }),
+  };
 
-  ]).start();
-       titleFade.setValue(1);
-similarFade.setValue(0);
-  fadeAnim.setValue(0); // reset opacity for next open
-  setExpanded(false);
-};
+  useEffect(() => {
+    let timer;
+    if (visible) {
+      timer = setTimeout(() => {
+        setShowAllItems(true);
+        console.log("✅ showAllItems set to true via timeout");
+      }, 600); // match total animation duration (600–800ms)
+    } else {
+      setShowAllItems(false);
+    }
+
+    return () => clearTimeout(timer);
+  }, [visible]);
+
+
+  const crumble = () => {
+    Animated.parallel([
+      Animated.timing(scaleAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: false,
+      }),
+      Animated.timing(colorAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: false,
+      }),
+
+    ]).start();
+    titleFade.setValue(1);
+    similarFade.setValue(0);
+    fadeAnim.setValue(0); // reset opacity for next open
+    setExpanded(false);
+  };
 
 
   const bgColor = colorAnim.interpolate({
@@ -238,74 +239,74 @@ similarFade.setValue(0);
     }
   };
 
-  
-
-const handleAddToCart = async () => {
-  try {
-    const selectedIds = Object.keys(selectedItems).filter(
-      (id) => selectedItems[id] === true
-    );
-
-    if (selectedIds.length === 0) {
-      console.log("No items selected to add to cart");
-      return;
-    }
-
-    dispatch(startCartUpdate());
-
-    const data = {
-      user_id: user.user_id,
-      closet_id: closet.closet_id,
-      item_ids: selectedIds,
-    };
-
-    const response = await fetch(
-      `${API_BASE_URL}/v1/closets/add-to-cart`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }
-    );
-
-    const result = await response.json();
-
-    if (response.ok) {
-      const addedCount = result.added_item_ids?.length || selectedIds.length;
-
-      console.log(`✅ ${addedCount} item(s) added to cart.`);
-      dispatch(setCartCount(cartCount + addedCount));
-
-      setSelectedItems({});
-    } else {
-      console.log("❌ Failed to add:", result.error);
-    }
-  } catch (error) {
-    console.log("⚠️ Error adding to cart:", error);
-  } finally {
-    dispatch(finishCartUpdate());
-  }
-};
 
 
-
-  const deletecloset=async()=>{
+  const handleAddToCart = async () => {
     try {
-      
+      const selectedIds = Object.keys(selectedItems).filter(
+        (id) => selectedItems[id] === true
+      );
+
+      if (selectedIds.length === 0) {
+        console.log("No items selected to add to cart");
+        return;
+      }
+
+      dispatch(startCartUpdate());
+
+      const data = {
+        user_id: user.user_id,
+        closet_id: closet.closet_id,
+        item_ids: selectedIds,
+      };
+
+      const response = await fetch(
+        `${API_BASE_URL}/v1/closets/add-to-cart`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        const addedCount = result.added_item_ids?.length || selectedIds.length;
+
+        console.log(`✅ ${addedCount} item(s) added to cart.`);
+        dispatch(setCartCount(cartCount + addedCount));
+
+        setSelectedItems({});
+      } else {
+        console.log("❌ Failed to add:", result.error);
+      }
+    } catch (error) {
+      console.log("⚠️ Error adding to cart:", error);
+    } finally {
+      dispatch(finishCartUpdate());
+    }
+  };
+
+
+
+  const deletecloset = async () => {
+    try {
+
       setClosets((prevClosets) =>
-      prevClosets.filter((c) => c.closet_id !== closet.closet_id)
-    );
-     onClose();
-      const response=await fetch(`${API_BASE_URL}/v1/closets/delete`, {
-      method: 'POST',
-      
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_id: user.user_id, closet_id:closet.closet_id }),
-    })
-     setclosetshome((prevClosets) =>
-      prevClosets.filter((c) => c.closet_id !== closet.closet_id)
-    );
-   
+        prevClosets.filter((c) => c.closet_id !== closet.closet_id)
+      );
+      onClose();
+      const response = await fetch(`${API_BASE_URL}/v1/closets/delete`, {
+        method: 'POST',
+
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: user.user_id, closet_id: closet.closet_id }),
+      })
+      setclosetshome((prevClosets) =>
+        prevClosets.filter((c) => c.closet_id !== closet.closet_id)
+      );
+
     } catch (error) {
       console.log(error)
     }
@@ -314,31 +315,32 @@ const handleAddToCart = async () => {
 
   return (
     <View style={styles.sheet}>
-      
+
       {/* Close button */}
       <TouchableOpacity onPress={onClose} style={styles.cross}>
         <Text style={{ fontSize: 20 }}>✕</Text>
       </TouchableOpacity>
 
       {/* Title */}
-    
- <View style={{ alignItems: 'center', justifyContent: 'center', height: 60 }}>
-  <Animated.Text style={[styles.title, { opacity: titleFade }]}>
-    {closet.name}
-  </Animated.Text>
-  
-  <Animated.Text
-    style={[
-      styles.title,
-      {
-        position: 'absolute', // 👈 makes it overlap
-        opacity: similarFade,
-      },
-    ]}
-  >
-    Similar to {closet.name}
-  </Animated.Text>
-</View>
+
+      <View style={{ alignItems: 'center', justifyContent: 'center', height: 60 }}>
+        <Animated.Text style={[styles.title, { opacity: titleFade }]}>
+          {closet.name}
+        </Animated.Text>
+
+        <Animated.Text
+          style={[
+            styles.title,
+            {
+              position: 'absolute', // 👈 makes it overlap
+              opacity: similarFade,
+              marginTop:30
+            },
+          ]}
+        >
+          Similar to {closet.name}
+        </Animated.Text>
+      </View>
 
 
       {/* Top row */}
@@ -347,21 +349,21 @@ const handleAddToCart = async () => {
           {selectedCount}/{closet.items.length} selected
         </Text>
         <View style={styles.buttonRow}>
-  <IconPressButton
-    iconSource={require('../assets/images/share.png')}
-    onPress={handleShare}
-  />
+          <IconPressButton
+            iconSource={require('../assets/images/share.png')}
+            onPress={handleShare}
+          />
 
- {!isUpdating?( <IconPressButton
-    iconSource={require('../assets/images/add-to-bag.png')}
-    onPress={handleAddToCart}
-  />):(<ActivityIndicator size="small" color="black" />)}
+          {!isUpdating ? (<IconPressButton
+            iconSource={require('../assets/images/add-to-bag.png')}
+            onPress={handleAddToCart}
+          />) : (<ActivityIndicator size="small" color="black" />)}
 
-  <IconPressButton
-    iconSource={require('../assets/images/delete.png')}
-    onPress={handleDeletePress}
-  />
-</View>
+          <IconPressButton
+            iconSource={require('../assets/images/delete.png')}
+            onPress={handleDeletePress}
+          />
+        </View>
 
       </View>
 
@@ -375,23 +377,29 @@ const handleAddToCart = async () => {
               {(showAllItems ? closet.items : closet.items.slice(0, 4)).map((item, index) => (
                 <View key={`${item.item_id}-${index}`} style={styles.gridItem}>
                   <View style={{ position: 'relative' }}>
-                    <TouchableWithoutFeedback onPress={()=>{setshowprod(item)}}>
-                    <Image
-                      source={{ uri: `${API_BASE_URL}/v1/items/getimage?url=${encodeURIComponent(item.image_url)}` }}
-                      style={styles.gridImage}
-                    />
+                    <TouchableWithoutFeedback onPress={() => { setshowprod(item) }}>
+                      <Image
+                        source={{ uri: `${API_BASE_URL}/v1/items/getimage?url=${encodeURIComponent(item.image_url)}` }}
+                        style={styles.gridImage}
+                      />
                     </TouchableWithoutFeedback>
-                    <CheckBox
-                      value={!!selectedItems[item.item_id]}
-                      onValueChange={(newValue) => {
-                        setSelectedItems((prev) => ({
+                    <Pressable
+                      style={styles.checkboxContainer}
+                      hitSlop={12}
+                      onPress={() => {
+                        setSelectedItems(prev => ({
                           ...prev,
-                          [item.item_id]: newValue,
+                          [item.item_id]: !prev[item.item_id],
                         }));
                       }}
-                      tintColors={{ true: 'black', false: 'black' }}
-                      style={styles.gridCheckbox}
-                    />
+                    >
+                      <CheckBox
+                        value={!!selectedItems[item.item_id]}
+                        onValueChange={() => { }}
+                        disabled={true}
+                        tintColors={{ true: 'black', false: 'black' }}
+                      />
+                    </Pressable>
                   </View>
                   <Text style={styles.itemTitle} numberOfLines={1}>{item.title}</Text>
                   <Text style={styles.price}>{item.price}</Text>
@@ -401,7 +409,7 @@ const handleAddToCart = async () => {
           )}
         </ScrollView>
       </View>
-           {showprod&&(<ProductCard item={showprod} visible={!!showprod} onClose={() => setshowprod(null)}/> )}
+      {showprod && (<ProductCard item={showprod} visible={!!showprod} onClose={() => setshowprod(null)} />)}
       {/* Bottom button */}
       <View style={styles.bottomButtonContainer}>
         <Animated.View
@@ -423,20 +431,20 @@ const handleAddToCart = async () => {
           </TouchableOpacity>
         )}
 
-       
+
         <ConfirmDialog
-  visible={confirmVisible}
-  title="Delete Closet?"
-  message={`Are you sure you want to delete "${closet.name}"?`}
-  onCancel={() => setConfirmVisible(false)}
-  onConfirm={deletecloset}
-/>
+          visible={confirmVisible}
+          title="Delete Closet?"
+          message={`Are you sure you want to delete "${closet.name}"?`}
+          onCancel={() => setConfirmVisible(false)}
+          onConfirm={deletecloset}
+        />
       </View>
       {expanded && (
-  <Animated.View style={[styles.fullContent, { opacity: fadeAnim }]}>
-    <SwipeUI closet={closet} closets={closets} setclosets={setclosetshome} setClosets={setClosets}/>
-  </Animated.View>
-)}
+        <Animated.View style={[styles.fullContent, { opacity: fadeAnim }]}>
+          <SwipeUI closet={closet} closets={closets} setclosets={setclosetshome} setClosets={setClosets} />
+        </Animated.View>
+      )}
     </View>
   );
 };
@@ -451,7 +459,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     width,
-    maxWidth:'100%',
+    maxWidth: '100%',
     backgroundColor: 'white',
     padding: 16,
     zIndex: 1000,              // ensure it sits on top
@@ -460,16 +468,22 @@ const styles = StyleSheet.create({
 
   cross: {
     position: 'absolute',
-    top: 15,
+    top: 30,
     right: 20,
     zIndex: 10,
     paddingTop: 30
   },
+  checkboxContainer: {
+  position: 'absolute',
+  top: 8,
+  left: 8,
+  zIndex: 100,
+},
   title: {
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
-    // marginTop: 20,
+    marginTop: 30,
     // marginBottom: 10,
   },
   topRow: {
@@ -594,7 +608,7 @@ const styles = StyleSheet.create({
   },
   fullContent: {
     position: 'absolute',
-    top:50,
+    top: 50,
     left: 0,
     right: 0,
     bottom: 0,

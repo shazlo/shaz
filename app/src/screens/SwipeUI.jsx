@@ -14,6 +14,7 @@ import {
   ImageBackground,
   Share,
   InteractionManager,
+  Platform
 } from 'react-native';
 //import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -60,7 +61,10 @@ const colorSchemes = [
   '#00bcd4', // Cyan
   '#8bc34a', // Green
 ];
-
+const isTablet = Platform.OS === 'ios' && Math.min(width, height) >= 768;
+const isLargeIPad =
+  isTablet &&
+  Math.max(width, height) >= 1180;
 export default function SwipeUI({ brand, handleScreenChange, activeScreen, closets, setclosets, preferred_gender }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [swipedCards, setSwipedCards] = useState(0);
@@ -115,7 +119,11 @@ export default function SwipeUI({ brand, handleScreenChange, activeScreen, close
 const translateAnim = useRef(new Animated.Value(0)).current;
 
 const [displayGender, setDisplayGender] = useState(gender);
+const isTablet = width >= 768;
 
+const CARD_WIDTH = isTablet
+    ? Math.min(width * 0.72, 620)
+    : width * 0.92;
 useEffect(() => {
   const checkTutorial = async () => {
     try {
@@ -728,6 +736,7 @@ translateY.setValue(0);
     }
   });
 };
+
 
 
   const getitems = async (gender,recommend, min_price, max_price, brands, products) => {
@@ -1750,11 +1759,11 @@ const styles = StyleSheet.create({
     //padding:20,
     //justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: isLargeIPad?10:50,
   },
   card: {
     width: width * 0.92,
-    height: '72%',
+    height: '65%',
     borderRadius: 16,
     elevation: 5,
     marginTop: 7,

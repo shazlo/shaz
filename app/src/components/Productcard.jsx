@@ -255,19 +255,25 @@ const ProductCard = ({ item, visible, onClose }) => {
 
               {/* Product Info Gradient */}
               <LinearGradient
-                colors={['rgba(0,0,0,1.0)', 'rgba(0,0,0,0.6)', 'transparent']}
-                start={{ x: 0, y: 1 }}
-                end={{ x: 0, y: 0 }}
-                style={styles.bottomGradient}
-              >
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding:20
-                  }}
-                >
+  colors={['rgba(0,0,0,1)', 'rgba(0,0,0,0.6)', 'transparent']}
+  start={{ x: 0, y: 1 }}
+  end={{ x: 0, y: 0 }}
+  style={[
+    styles.bottomGradient,
+    {
+      justifyContent: 'flex-end',   // Push children to bottom
+     
+    },
+  ]}
+>
+  <View
+    style={{
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      justifyContent: 'space-between',
+      padding:20
+    }}
+  >
                   <Text
                     style={{
                       fontSize: 15,

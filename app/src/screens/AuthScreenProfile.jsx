@@ -22,8 +22,24 @@ import { Vibration } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchCart } from '../QueryHooks/Cart';
 import { setCartCount } from '../store/cartSlice';
-const { width } = Dimensions.get('window');
+// const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
+const isTablet = Platform.OS === 'ios' && Math.min(width, height) >= 768;
+
+// iPhone 17 family (includes all Dynamic Island iPhones)
+const isModernIPhone =
+  Platform.OS === 'ios' &&
+  !isTablet &&
+  height >= 852;
+
+// iPad Air 11" / 13" (and newer large iPads)
+const isLargeIPad =
+  isTablet &&
+  Math.max(width, height) >= 1180;
+
+const topMargin =
+  isModernIPhone || isLargeIPad ? 30 : 5;
 const AuthScreenProfile = () => {
   const [mode, setMode] = useState('signup');
   const [gender, setGender] = useState('');
@@ -173,7 +189,7 @@ if (!response.ok) {
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: 60 }}
+      contentContainerStyle={{ flexGrow:1,paddingBottom: 60 }}
       keyboardShouldPersistTaps="handled"
     >
       <View style={[{padding:0,  alignItems: 'center'}]}>
@@ -337,7 +353,7 @@ if (!response.ok) {
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 24, backgroundColor: '#fff', flex: 1 , marginTop:30},
+  container: { padding: 24, backgroundColor: '#fff', flex: 1 , marginTop:topMargin},
   logo: {
     fontSize: 46,
     alignSelf: 'center',

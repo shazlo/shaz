@@ -104,11 +104,11 @@ const TutorialDialog = ({ title, description, onNext, onBack, isLast, step }) =>
 /* 🔹 All Tutorial Steps */
 const tutorialSteps = [
   {
-    // 🔥 Combined cinematic intro
-    intro: true,
-    logo: require("../assets/images/shazlo-logo-v4.png"),
-    tagline: "Welcome to the BETA.\nLet the app find the fits for you — because your job is to wear them.\n \n Buying from the app is coming soon.\nFor now, you can buy products by visiting the brand’s website.",
-  },
+  intro: true,
+  logo: require("../assets/images/shazlo-logo-v4.png"),
+  tagline:
+    "Your personal fashion discovery app.\nFind outfits tailored to your style in seconds\n\nExplore curated products from leading brands and discover your next favourite look.",
+},
   {
     title: "Swipe Right to Like ❤️",
     description: "Found something you love? Swipe right to add it to your style preferences.",
@@ -139,18 +139,18 @@ const tutorialSteps = [
       "Every swipe teaches the app your taste. Shazlo learns your style and finds perfect outfits for you.",
     position: "center",
   },
-  {
-    title: "Tap Here to Go to Product Page",
-    description: "To go to website to actually buy the product you found on Shazlo",
-    tapMarker: { x: 0.88, y: 0.9 },
-    position: "center",
-  },
-  {
-    title: "Tap Here to Learn More ",
-    description: "Tap the info icon to see more about the product — details and return policy.",
-    tapMarker: { x: 0.85, y: 0.25 },
-    position: "bottom",
-  },
+  // {
+  //   title: "Tap Here to Go to Product Page",
+  //   description: "To go to website to actually buy the product you found on Shazlo",
+  //   tapMarker: { x: 0.88, y: 0.9 },
+  //   position: "center",
+  // },
+  // {
+  //   title: "Tap Here to Learn More ",
+  //   description: "Tap the info icon to see more about the product — details and return policy.",
+  //   tapMarker: { x: 0.85, y: 0.25 },
+  //   position: "bottom",
+  // },
   {
     title: "Navigate Images ",
     description:
