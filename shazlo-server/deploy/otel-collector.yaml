@@ -1,0 +1,55 @@
+# App → collector (OTLP) for traces/metrics; container stdout → collector (filelog) for logs.
+# Backend endpoint/auth come from env: OTEL_BACKEND_ENDPOINT, OTEL_BACKEND_AUTH.
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+  filelog:
+    include: [/var/lib/docker/containers/*/*-json.log]
+    operators:
+      - type: container
+        format: docker
+      - type: json_parser
+        parse_from: body
+        on_error: send
+
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_percentage: 80
+    spike_limit_percentage: 20
+  batch: {}
+  tail_sampling:
+    decision_wait: 10s
+    policies:
+      - name: errors
+        type: status_code
+        status_code: { status_codes: [ERROR] }
+      - name: slow
+        type: latency
+        latency: { threshold_ms: 500 }
+      - name: baseline
+        type: probabilistic
+        probabilistic: { sampling_percentage: 10 }
+
+exporters:
+  otlphttp:
+    endpoint: ${env:OTEL_BACKEND_ENDPOINT}
+    headers:
+      Authorization: ${env:OTEL_BACKEND_AUTH}
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, tail_sampling, batch]
+      exporters: [otlphttp]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [otlphttp]
+    logs:
+      receivers: [filelog]
+      processors: [memory_limiter, batch]
+      exporters: [otlphttp]

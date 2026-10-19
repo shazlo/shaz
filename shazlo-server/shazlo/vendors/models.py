@@ -1,0 +1,1 @@
+"""Vendor, VendorUser, approval status."""

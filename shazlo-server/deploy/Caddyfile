@@ -1,0 +1,7 @@
+# Cloudflare (SSL mode: Full strict) → Caddy → gunicorn.
+# certs/ holds a Cloudflare Origin Certificate, so no ACME challenge through the proxy.
+{$DOMAIN} {
+	tls /etc/caddy/certs/origin.pem /etc/caddy/certs/origin-key.pem
+	encode zstd gzip
+	reverse_proxy web:8000
+}
