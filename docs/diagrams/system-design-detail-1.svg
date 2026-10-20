@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 800" width="680" height="800" role="img">
+<style>
+svg{--b:#b4b2a9}
+text{font-family:"Segoe UI",Arial,sans-serif;fill:#2c2c2a}
+.th{font-size:14px;font-weight:600}.ts{font-size:12px;fill:#5f5e5a}
+.box{fill:#f7f6f2;stroke:#888780;stroke-width:.8}
+.arr{stroke:#5f5e5a;stroke-width:1.5;fill:none}
+.c-teal rect{fill:#e1f5ee;stroke:#0f6e56;stroke-width:.8}.c-teal .th{fill:#085041}.c-teal .ts{fill:#0f6e56}
+.c-purple rect{fill:#eeedfe;stroke:#534ab7;stroke-width:.8}.c-purple .th{fill:#3c3489}.c-purple .ts{fill:#534ab7}
+.c-amber circle{fill:#faeeda;stroke:#854f0b;stroke-width:.8}.c-amber .ts{fill:#633806;font-weight:600}
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect x="20" y="20" width="640" height="84" rx="12" fill="none" stroke="var(--b)" stroke-width="0.5" stroke-dasharray="4 4"/>
+<text class="ts" x="34" y="38">Clients</text>
+<rect class="box" x="40" y="46" width="140" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="110" y="62" text-anchor="middle" dominant-baseline="central">Customer app</text>
+<text class="ts" x="110" y="80" text-anchor="middle" dominant-baseline="central">React Native</text>
+<line class="arr" x1="110" y1="106" x2="110" y2="130" marker-end="url(#arrow)"/>
+<rect class="box" x="195" y="46" width="140" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="265" y="62" text-anchor="middle" dominant-baseline="central">Vendor portal</text>
+<text class="ts" x="265" y="80" text-anchor="middle" dominant-baseline="central">React, browser</text>
+<line class="arr" x1="265" y1="106" x2="265" y2="130" marker-end="url(#arrow)"/>
+<rect class="box" x="350" y="46" width="140" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="420" y="62" text-anchor="middle" dominant-baseline="central">Admin screens</text>
+<text class="ts" x="420" y="80" text-anchor="middle" dominant-baseline="central">browser</text>
+<line class="arr" x1="420" y1="106" x2="420" y2="130" marker-end="url(#arrow)"/>
+<rect class="box" x="505" y="46" width="140" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="575" y="62" text-anchor="middle" dominant-baseline="central">Website</text>
+<text class="ts" x="575" y="80" text-anchor="middle" dominant-baseline="central">browser</text>
+<line class="arr" x1="575" y1="106" x2="575" y2="130" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="340" cy="118" r="9" stroke-width="0.5"/><text class="ts" x="340" y="118" text-anchor="middle" dominant-baseline="central">1</text></g>
+<rect x="20" y="132" width="640" height="80" rx="12" fill="none" stroke="var(--b)" stroke-width="0.5" stroke-dasharray="4 4"/>
+<text class="ts" x="34" y="150">Edge, public internet side</text>
+<rect class="box" x="40" y="158" width="280" height="44" rx="8" stroke-width="0.5"/>
+<text class="th" x="180" y="173" text-anchor="middle" dominant-baseline="central">Cloudflare</text>
+<text class="ts" x="180" y="191" text-anchor="middle" dominant-baseline="central">DNS, TLS, WAF, Access</text>
+<rect class="box" x="360" y="158" width="280" height="44" rx="8" stroke-width="0.5"/>
+<text class="th" x="500" y="173" text-anchor="middle" dominant-baseline="central">Caddy</text>
+<text class="ts" x="500" y="191" text-anchor="middle" dominant-baseline="central">ports 80, 443, blocks /internal</text>
+<line class="arr" x1="322" y1="180" x2="358" y2="180" marker-end="url(#arrow)"/>
+<line class="arr" x1="170" y1="214" x2="170" y2="246" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="190" cy="230" r="9" stroke-width="0.5"/><text class="ts" x="190" y="230" text-anchor="middle" dominant-baseline="central">2</text></g>
+<line class="arr" x1="510" y1="214" x2="510" y2="246" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="530" cy="230" r="9" stroke-width="0.5"/><text class="ts" x="530" y="230" text-anchor="middle" dominant-baseline="central">3</text></g>
+<g class="c-teal"><rect x="20" y="248" width="300" height="184" rx="16" stroke-width="0.5"/>
+<text class="th" x="170" y="270" text-anchor="middle" dominant-baseline="central">Core service</text>
+<text class="ts" x="170" y="288" text-anchor="middle" dominant-baseline="central">Django, customer and commerce</text>
+</g>
+<g class="c-purple"><rect x="360" y="248" width="300" height="184" rx="16" stroke-width="0.5"/>
+<text class="th" x="510" y="270" text-anchor="middle" dominant-baseline="central">Vendor-admin service</text>
+<text class="ts" x="510" y="288" text-anchor="middle" dominant-baseline="central">FastAPI, seller back-office</text>
+</g>
+<rect class="box" x="34" y="300" width="272" height="34" rx="4" stroke-width="0.5"/>
+<text class="th" x="46" y="317" text-anchor="start" dominant-baseline="central">Core API</text>
+<text class="ts" x="294" y="317" text-anchor="end" dominant-baseline="central">Django :8000</text>
+<rect class="box" x="34" y="342" width="272" height="34" rx="4" stroke-width="0.5"/>
+<text class="th" x="46" y="359" text-anchor="start" dominant-baseline="central">Core jobs</text>
+<text class="ts" x="294" y="359" text-anchor="end" dominant-baseline="central">cron, then worker</text>
+<rect class="box" x="34" y="384" width="272" height="34" rx="4" stroke-width="0.5"/>
+<text class="th" x="46" y="401" text-anchor="start" dominant-baseline="central">Embedding cache</text>
+<text class="ts" x="294" y="401" text-anchor="end" dominant-baseline="central">in memory (MVP)</text>
+<rect class="box" x="374" y="300" width="272" height="34" rx="4" stroke-width="0.5"/>
+<text class="th" x="386" y="317" text-anchor="start" dominant-baseline="central">Vendor API</text>
+<text class="ts" x="634" y="317" text-anchor="end" dominant-baseline="central">FastAPI :8001</text>
+<rect class="box" x="374" y="342" width="272" height="34" rx="4" stroke-width="0.5"/>
+<text class="th" x="386" y="359" text-anchor="start" dominant-baseline="central">Admin UI</text>
+<text class="ts" x="634" y="359" text-anchor="end" dominant-baseline="central">SQLAdmin, same process</text>
+<rect class="box" x="374" y="384" width="272" height="34" rx="4" stroke-width="0.5"/>
+<text class="th" x="386" y="401" text-anchor="start" dominant-baseline="central">Vendor jobs</text>
+<text class="ts" x="634" y="401" text-anchor="end" dominant-baseline="central">cron, then worker</text>
+<line class="arr" x1="358" y1="358" x2="322" y2="358" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="340" cy="344" r="9" stroke-width="0.5"/><text class="ts" x="340" y="344" text-anchor="middle" dominant-baseline="central">4</text></g>
+<line class="arr" x1="322" y1="394" x2="358" y2="394" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<g class="c-amber"><circle cx="340" cy="380" r="9" stroke-width="0.5"/><text class="ts" x="340" y="380" text-anchor="middle" dominant-baseline="central">5</text></g>
+<line class="arr" x1="110" y1="434" x2="110" y2="468" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="130" cy="452" r="9" stroke-width="0.5"/><text class="ts" x="130" y="452" text-anchor="middle" dominant-baseline="central">6</text></g>
+<line class="arr" x1="290" y1="434" x2="290" y2="468" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="310" cy="452" r="9" stroke-width="0.5"/><text class="ts" x="310" y="452" text-anchor="middle" dominant-baseline="central">8</text></g>
+<line class="arr" x1="410" y1="434" x2="410" y2="468" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="430" cy="452" r="9" stroke-width="0.5"/><text class="ts" x="430" y="452" text-anchor="middle" dominant-baseline="central">9</text></g>
+<line class="arr" x1="570" y1="434" x2="570" y2="468" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="590" cy="452" r="9" stroke-width="0.5"/><text class="ts" x="590" y="452" text-anchor="middle" dominant-baseline="central">7</text></g>
+<rect x="20" y="470" width="640" height="120" rx="12" fill="none" stroke="var(--b)" stroke-width="0.5" stroke-dasharray="4 4"/>
+<text class="ts" x="34" y="488">Data stores: one Postgres server with two databases, plus Redis</text>
+<rect class="box" x="34" y="498" width="186" height="80" rx="8" stroke-width="0.5"/>
+<text class="th" x="127" y="516" text-anchor="middle" dominant-baseline="central">shazlo_core</text>
+<text class="ts" x="127" y="538" text-anchor="middle" dominant-baseline="central">Postgres + pgvector</text>
+<text class="ts" x="127" y="556" text-anchor="middle" dominant-baseline="central">role core_app only</text>
+<rect class="box" x="247" y="498" width="186" height="80" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="516" text-anchor="middle" dominant-baseline="central">Redis (target)</text>
+<text class="ts" x="340" y="538" text-anchor="middle" dominant-baseline="central">queues, feed state, cache</text>
+<text class="ts" x="340" y="556" text-anchor="middle" dominant-baseline="central">none in the MVP</text>
+<rect class="box" x="460" y="498" width="186" height="80" rx="8" stroke-width="0.5"/>
+<text class="th" x="553" y="516" text-anchor="middle" dominant-baseline="central">shazlo_vendor</text>
+<text class="ts" x="553" y="538" text-anchor="middle" dominant-baseline="central">Postgres</text>
+<text class="ts" x="553" y="556" text-anchor="middle" dominant-baseline="central">role vendor_app only</text>
+<line class="arr" x1="340" y1="592" x2="340" y2="622" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="360" cy="608" r="9" stroke-width="0.5"/><text class="ts" x="360" y="608" text-anchor="middle" dominant-baseline="central">10</text></g>
+<rect x="20" y="624" width="640" height="70" rx="12" fill="none" stroke="var(--b)" stroke-width="0.5" stroke-dasharray="4 4"/>
+<text class="ts" x="34" y="642">Backups</text>
+<rect class="box" x="180" y="650" width="320" height="36" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="662" text-anchor="middle" dominant-baseline="central">Object storage (Cloudflare R2)</text>
+<text class="ts" x="340" y="678" text-anchor="middle" dominant-baseline="central">nightly dumps, WAL, restore tests</text>
+<rect class="box" x="20" y="716" width="640" height="58" rx="12" stroke-width="0.5"/>
+<text class="th" x="340" y="736" text-anchor="middle" dominant-baseline="central">Hosting: Docker network on one small VM at launch</text>
+<text class="ts" x="340" y="756" text-anchor="middle" dominant-baseline="central">Postgres may be a managed server in the same region instead of a container</text>
+</svg>
