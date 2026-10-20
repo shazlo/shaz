@@ -26,6 +26,7 @@ These documents describe who Shazlo is for, how users move through it, how the s
 | 06 | [MVP slice and migration](06-mvp-slice-and-migration.md) | Exactly what is built by Oct 30 on today's backend, and how it migrates to the new server |
 | 07 | [Website audit and plan](07-website-audit-and-plan.md) | What is wrong with the marketing site, and what to fix |
 | 08 | [Service split](08-service-split.md) | Core and Vendor-admin: the boundary rule, what changed in the redraw, builder checklist |
+| - | [Core build and migration plan](core-build-plan.md) | The month-long plan to build Core in `shazlo-server`, migrate the old data, then migrate the app |
 | - | [Open questions](open-questions.md) | Decisions the team still has to make, each with a default |
 | - | [Decision records](adr/) | Why the big choices were made |
 
