@@ -1,12 +1,12 @@
 # LOCAL infra only. Django/Celery run natively (see Makefile).
 services:
   postgres:
-    image: postgres:17-alpine
+    image: pgvector/pgvector:pg17
     environment:
       POSTGRES_USER: shazlo
       POSTGRES_PASSWORD: shazlo
       POSTGRES_DB: shazlo
-    ports: ["5432:5432"]
+    ports: ["5433:5432"]
     volumes: [pgdata:/var/lib/postgresql/data]
 
   redis-state:
@@ -22,30 +22,9 @@ services:
     ports: ["6380:6379"]
 
   # Stand-in for Cloudflare R2.
-  minio:
-    image: quay.io/minio/minio
-    command: server /data --console-address ":9001"
-    environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
-    ports: ["9000:9000", "9001:9001"]
-    volumes: [miniodata:/data]
+ 
 
-  minio-init:
-    image: quay.io/minio/mc
-    depends_on: [minio]
-    entrypoint: >
-      /bin/sh -c "
-      until mc alias set local http://minio:9000 minioadmin minioadmin; do sleep 1; done;
-      mc mb --ignore-existing local/shazlo"
-
-  # Pinecone emulator for local dev/tests.
-  pinecone:
-    image: ghcr.io/pinecone-io/pinecone-local:latest
-    environment:
-      PORT: 5080
-      PINECONE_HOST: localhost
-    ports: ["5080-5090:5080-5090"]
+ 
 
 volumes:
   pgdata:
