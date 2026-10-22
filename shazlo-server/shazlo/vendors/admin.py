@@ -1,1 +1,0 @@
-"""Admin: vendor approval queue."""

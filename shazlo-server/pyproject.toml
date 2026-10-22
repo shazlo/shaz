@@ -19,7 +19,6 @@ dependencies = [
     "pyjwt",
     "google-auth",
     "boto3",
-    "pinecone",
     "razorpay",
     "opentelemetry-sdk",
     "opentelemetry-exporter-otlp-proto-http",
@@ -29,6 +28,7 @@ dependencies = [
     "opentelemetry-instrumentation-celery",
     "opentelemetry-instrumentation-httpx",
     "opentelemetry-instrumentation-botocore",
+    "pgvector>=0.5.1",
 ]
 
 [dependency-groups]

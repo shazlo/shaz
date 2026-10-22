@@ -1,6 +1,6 @@
 from config.env import env
 
-# Cloudflare R2 (S3 API). MinIO stands in locally.
+# Cloudflare R2 (S3 API). No local stand-in; tests that need S3 use moto.
 USE_R2 = env.bool("USE_R2", default=False)
 R2_ENDPOINT_URL = env("R2_ENDPOINT_URL", default="")
 R2_ACCESS_KEY_ID = env("R2_ACCESS_KEY_ID", default="")

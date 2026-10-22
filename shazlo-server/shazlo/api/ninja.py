@@ -5,7 +5,6 @@ from ninja import NinjaAPI
 from shazlo.catalog.apis import router as catalog_router
 from shazlo.core.exceptions import ApplicationError
 from shazlo.orders.webhooks import router as webhooks_router
-from shazlo.vendors.apis import router as vendors_router
 
 api = NinjaAPI(
     title="Shazlo",
@@ -14,7 +13,6 @@ api = NinjaAPI(
     docs_url="/docs" if settings.DEBUG else None,
 )
 
-api.add_router("/vendors/", vendors_router)
 api.add_router("/catalog/", catalog_router)
 api.add_router("/webhooks/", webhooks_router)
 

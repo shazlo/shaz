@@ -1,12 +1,12 @@
 # shazlo-server
 
-Django 6 · Strawberry GraphQL (app) · Django Ninja REST (vendor portal, webhooks) · Postgres · Redis ×2 · Celery · Pinecone · R2 · OpenTelemetry.
+Django 6 · Strawberry GraphQL (app) · Django Ninja REST (webhooks, public and internal routes) · Postgres with pgvector · Redis ×2 · Celery · OpenTelemetry.
 
 ## Run locally
 
 ```bash
 cp .env.example .env
-make up          # postgres, redis-state, redis-cache, minio, pinecone-local
+make up          # postgres (pgvector, port 5433), redis-state, redis-cache
 make install     # uv sync + pre-commit
 make migrate
 make run         # http://localhost:8000/graphql (GraphiQL), /api/v1/docs, /admin/
@@ -21,8 +21,8 @@ make worker      # celery, separate terminal
 config/            settings (django/{base,local,production,test}.py + settings/*.py), urls, asgi, celery
 shazlo/core/       BaseModel, ApplicationError, redis clients, health, observability/
 shazlo/api/        the edge: GraphQL schema, Ninja API, persisted queries. No business logic.
-shazlo/<domain>/   users, auth, vendors, catalog, feed, orders
-shazlo/integrations/  thin third-party clients (pinecone, modal, r2, razorpay, whatsapp, google)
+shazlo/<domain>/   users, auth, catalog, feed, orders (closets and the rest follow the build plan)
+shazlo/integrations/  thin third-party clients (modal, r2, razorpay, whatsapp, google)
 deploy/            Dockerfile, prod compose, gunicorn, Caddy, Redis confs, OTel collector
 ```
 

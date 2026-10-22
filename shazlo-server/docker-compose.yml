@@ -1,4 +1,6 @@
 # LOCAL infra only. Django/Celery run natively (see Makefile).
+# Object storage: no local stand-in (the community MinIO image is no longer published).
+# Product images stay on Cloudinary for now; tests that need S3 use moto.
 services:
   postgres:
     image: pgvector/pgvector:pg17
@@ -21,11 +23,5 @@ services:
     volumes: ["./deploy/redis-cache.conf:/usr/local/etc/redis/redis.conf:ro"]
     ports: ["6380:6379"]
 
-  # Stand-in for Cloudflare R2.
- 
-
- 
-
 volumes:
   pgdata:
-  miniodata:

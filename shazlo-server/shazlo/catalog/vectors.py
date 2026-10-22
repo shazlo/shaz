@@ -1,1 +1,1 @@
-"""Product → embedding input text + Pinecone metadata shape."""
+"""Product text and image inputs for embeddings; the vectors themselves live in pgvector."""

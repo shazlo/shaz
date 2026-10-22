@@ -19,7 +19,6 @@ INSTALLED_APPS = [
     "shazlo.api",
     "shazlo.users",
     "shazlo.auth",
-    "shazlo.vendors",
     "shazlo.catalog",
     "shazlo.feed",
     "shazlo.orders",

@@ -2,11 +2,6 @@ from config.env import env
 
 # Every integration is off unless explicitly enabled.
 
-USE_PINECONE = env.bool("USE_PINECONE", default=False)
-PINECONE_API_KEY = env("PINECONE_API_KEY", default="")
-PINECONE_INDEX = env("PINECONE_INDEX", default="")
-PINECONE_HOST = env("PINECONE_HOST", default="")  # set for pinecone-local
-
 USE_MODAL = env.bool("USE_MODAL", default=False)
 MODAL_EMBED_URL = env("MODAL_EMBED_URL", default="")
 MODAL_TOKEN = env("MODAL_TOKEN", default="")

@@ -1,1 +1,1 @@
-"""candidates_from_pinecone."""
+"""candidates_from_pgvector."""
