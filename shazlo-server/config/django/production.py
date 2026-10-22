@@ -14,3 +14,12 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # Preload is a one-way commitment; opt in deliberately once HTTPS is settled everywhere.
 SILENCED_SYSTEM_CHECKS = ["security.W021"]
+
+# Refuse to start with weak or missing secrets.
+from django.core.exceptions import ImproperlyConfigured  # noqa: E402
+
+for _name in ("JWT_SIGNING_KEY", "INTERNAL_HMAC_SECRET_INBOUND", "INTERNAL_HMAC_SECRET_OUTBOUND"):
+    if len(globals()[_name]) < 32:
+        raise ImproperlyConfigured(f"{_name} must be set to at least 32 characters in production")
+if GRAPHQL_INTROSPECTION:
+    raise ImproperlyConfigured("GraphQL introspection must be off in production")

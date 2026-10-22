@@ -84,9 +84,13 @@ STORAGES = {
 # not Django's dictConfig.
 LOGGING_CONFIG = None
 
+# GraphQL introspection is off unless a settings module turns it on (local and test only).
+GRAPHQL_INTROSPECTION = False
+
 from config.settings.celery import *  # noqa: E402
 from config.settings.cors import *  # noqa: E402
 from config.settings.integrations import *  # noqa: E402
+from config.settings.internal import *  # noqa: E402
 from config.settings.jwt import *  # noqa: E402
 from config.settings.observability import *  # noqa: E402
 from config.settings.redis import *  # noqa: E402

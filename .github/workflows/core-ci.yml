@@ -85,6 +85,9 @@ jobs:
         env:
           DJANGO_SETTINGS_MODULE: config.django.production
           DJANGO_ALLOWED_HOSTS: api.shazlo.store
+          JWT_SIGNING_KEY: ci-only-jwt-key-0123456789-0123456789-0123456789
+          INTERNAL_HMAC_SECRET_INBOUND: ci-only-hmac-inbound-0123456789-0123456789
+          INTERNAL_HMAC_SECRET_OUTBOUND: ci-only-hmac-outbound-0123456789-012345678
         run: uv run python manage.py check --deploy --fail-level WARNING
 
       - name: Tests

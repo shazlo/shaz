@@ -1,6 +1,9 @@
+from collections.abc import Callable
+
 import strawberry
 from django.conf import settings
-from strawberry.extensions import MaxAliasesLimiter, QueryDepthLimiter
+from strawberry.extensions import DisableIntrospection, MaxAliasesLimiter, QueryDepthLimiter
+from strawberry.extensions.base_extension import SchemaExtension
 
 from shazlo.api.extensions import OperationSpanName
 
@@ -14,11 +17,15 @@ class Query:
         return settings.APP_VERSION
 
 
-schema = strawberry.Schema(
-    query=Query,
-    extensions=[
+def build_schema(*, introspection: bool) -> strawberry.Schema:
+    extensions: list[type[SchemaExtension] | Callable[[], SchemaExtension]] = [
         OperationSpanName,
         lambda: QueryDepthLimiter(max_depth=10),
         lambda: MaxAliasesLimiter(max_alias_count=15),
-    ],
-)
+    ]
+    if not introspection:
+        extensions.append(lambda: DisableIntrospection())
+    return strawberry.Schema(query=Query, extensions=extensions)
+
+
+schema = build_schema(introspection=settings.GRAPHQL_INTROSPECTION)
