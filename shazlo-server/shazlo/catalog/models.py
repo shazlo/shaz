@@ -1,0 +1,1 @@
+"""Product, Sku, Stock, VectorOutbox."""

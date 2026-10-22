@@ -1,0 +1,27 @@
+# LOCAL infra only. Django/Celery run natively (see Makefile).
+# Object storage: no local stand-in (the community MinIO image is no longer published).
+# Product images stay on Cloudinary for now; tests that need S3 use moto.
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: shazlo
+      POSTGRES_PASSWORD: shazlo
+      POSTGRES_DB: shazlo
+    ports: ["5433:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+
+  redis-state:
+    image: redis:8  # Redis 8 ships Bloom filters (feed seen-filter)
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes: ["./deploy/redis-state.conf:/usr/local/etc/redis/redis.conf:ro"]
+    ports: ["6379:6379"]
+
+  redis-cache:
+    image: redis:8
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes: ["./deploy/redis-cache.conf:/usr/local/etc/redis/redis.conf:ro"]
+    ports: ["6380:6379"]
+
+volumes:
+  pgdata:

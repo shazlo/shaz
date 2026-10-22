@@ -1,0 +1,99 @@
+name: core-ci
+
+on:
+  push:
+    branches: [main, "refactor/**", "core/**"]
+    paths: ["shazlo-server/**", ".github/workflows/core-ci.yml"]
+  pull_request:
+    paths: ["shazlo-server/**", ".github/workflows/core-ci.yml"]
+
+concurrency:
+  group: core-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: shazlo-server
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: shazlo
+          POSTGRES_PASSWORD: shazlo
+          POSTGRES_DB: shazlo
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U shazlo -d shazlo"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+      redis:
+        image: redis:8
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DJANGO_SETTINGS_MODULE: config.django.test
+      DJANGO_SECRET_KEY: ci-only-secret-key-not-used-anywhere-else
+      JWT_SIGNING_KEY: ci-only-jwt-key-not-used-anywhere-else
+      DATABASE_URL: postgres://shazlo:shazlo@localhost:5432/shazlo
+      REDIS_STATE_URL: redis://localhost:6379/0
+      REDIS_CACHE_URL: redis://localhost:6379/2
+      CELERY_BROKER_URL: redis://localhost:6379/1
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.13.3"
+          python-version: "3.13"
+          enable-cache: true
+          cache-dependency-glob: shazlo-server/uv.lock
+
+      - name: Install dependencies (locked)
+        run: uv sync --locked
+
+      - name: Lint
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+
+      - name: Type check
+        run: uv run mypy .
+
+      - name: Module boundaries (import-linter)
+        run: uv run lint-imports
+
+      - name: Migrations are up to date
+        run: uv run python manage.py makemigrations --check --dry-run
+
+      - name: Deployment checks (production settings)
+        env:
+          DJANGO_SETTINGS_MODULE: config.django.production
+          DJANGO_ALLOWED_HOSTS: api.shazlo.store
+          JWT_SIGNING_KEY: ci-only-jwt-key-0123456789-0123456789-0123456789
+          INTERNAL_HMAC_SECRET_INBOUND: ci-only-hmac-inbound-0123456789-0123456789
+          INTERNAL_HMAC_SECRET_OUTBOUND: ci-only-hmac-outbound-0123456789-012345678
+        run: uv run python manage.py check --deploy --fail-level WARNING
+
+      - name: Tests
+        run: uv run pytest -q
+
+      - name: GraphQL schema is committed and current
+        run: |
+          uv run python manage.py export_schema shazlo.api.schema --path schema.graphql
+          git diff --exit-code -- schema.graphql

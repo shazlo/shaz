@@ -1,0 +1,76 @@
+# Prod on the VM. Postgres is managed (not here). Image tag comes from deploy.yml.
+x-app: &app
+  image: ${IMAGE:?set IMAGE, e.g. ghcr.io/<org>/shazlo-server}:${IMAGE_TAG:-latest}
+  env_file: .env
+  restart: unless-stopped
+  depends_on: [redis-state, redis-cache]
+  logging: &logging
+    driver: json-file
+    options: { max-size: "20m", max-file: "5" }
+
+services:
+  web:
+    <<: *app
+    expose: ["8000"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthz')"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+
+  worker:
+    <<: *app
+    command: ["celery", "-A", "config", "worker", "--loglevel=INFO"]
+
+  beat:
+    <<: *app
+    command: ["celery", "-A", "config", "beat", "--loglevel=INFO"]
+    deploy: { replicas: 1 }  # never run two schedulers
+
+  consumer:
+    <<: *app
+    command: ["python", "manage.py", "consume_swipes"]
+    profiles: ["consumer"]  # off until consume_swipes is implemented
+
+  redis-state:
+    image: redis:8
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - ./redis-state.conf:/usr/local/etc/redis/redis.conf:ro
+      - redis-state:/data
+    restart: unless-stopped
+    logging: *logging
+
+  redis-cache:
+    image: redis:8
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - ./redis-cache.conf:/usr/local/etc/redis/redis.conf:ro
+    restart: unless-stopped
+    logging: *logging
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.162.0
+    command: ["--config=/etc/otelcol/config.yaml"]
+    env_file: .env
+    volumes:
+      - ./otel-collector.yaml:/etc/otelcol/config.yaml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    restart: unless-stopped
+    logging: *logging
+
+  caddy:
+    image: caddy:2
+    ports: ["80:80", "443:443"]
+    env_file: .env
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./certs:/etc/caddy/certs:ro
+      - caddy-data:/data
+    depends_on: [web]
+    restart: unless-stopped
+    logging: *logging
+
+volumes:
+  redis-state:
+  caddy-data:

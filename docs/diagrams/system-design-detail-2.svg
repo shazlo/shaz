@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 560" width="680" height="560" role="img">
+<style>
+svg{--b:#b4b2a9}
+text{font-family:"Segoe UI",Arial,sans-serif;fill:#2c2c2a}
+.th{font-size:14px;font-weight:600}.ts{font-size:12px;fill:#5f5e5a}
+.box{fill:#f7f6f2;stroke:#888780;stroke-width:.8}
+.arr{stroke:#5f5e5a;stroke-width:1.5;fill:none}
+.c-teal rect{fill:#e1f5ee;stroke:#0f6e56;stroke-width:.8}.c-teal .th{fill:#085041}.c-teal .ts{fill:#0f6e56}
+.c-purple rect{fill:#eeedfe;stroke:#534ab7;stroke-width:.8}.c-purple .th{fill:#3c3489}.c-purple .ts{fill:#534ab7}
+.c-amber circle{fill:#faeeda;stroke:#854f0b;stroke-width:.8}.c-amber .ts{fill:#633806;font-weight:600}
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="c-teal"><rect x="20" y="30" width="200" height="260" rx="16" stroke-width="0.5"/>
+<text class="th" x="120" y="54" text-anchor="middle" dominant-baseline="central">Core service</text>
+<text class="ts" x="120" y="72" text-anchor="middle" dominant-baseline="central">api.shazlo.store</text>
+</g>
+<rect class="box" x="420" y="44" width="240" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="540" y="60" text-anchor="middle" dominant-baseline="central">Modal (CLIP)</text>
+<text class="ts" x="540" y="78" text-anchor="middle" dominant-baseline="central">HTTPS: image URL in, vector out</text>
+<line class="arr" x1="222" y1="68" x2="418" y2="68" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="320" cy="54" r="9" stroke-width="0.5"/><text class="ts" x="320" y="54" text-anchor="middle" dominant-baseline="central">11</text></g>
+<rect class="box" x="420" y="104" width="240" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="540" y="120" text-anchor="middle" dominant-baseline="central">Firebase Cloud Messaging</text>
+<text class="ts" x="540" y="138" text-anchor="middle" dominant-baseline="central">HTTPS push to the phone</text>
+<line class="arr" x1="222" y1="128" x2="418" y2="128" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="320" cy="114" r="9" stroke-width="0.5"/><text class="ts" x="320" y="114" text-anchor="middle" dominant-baseline="central">12</text></g>
+<rect class="box" x="420" y="164" width="240" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="540" y="180" text-anchor="middle" dominant-baseline="central">Google sign-in</text>
+<text class="ts" x="540" y="198" text-anchor="middle" dominant-baseline="central">HTTPS: verify the ID token</text>
+<line class="arr" x1="222" y1="188" x2="418" y2="188" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="320" cy="174" r="9" stroke-width="0.5"/><text class="ts" x="320" y="174" text-anchor="middle" dominant-baseline="central">13</text></g>
+<rect class="box" x="420" y="224" width="240" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="540" y="240" text-anchor="middle" dominant-baseline="central">Razorpay</text>
+<text class="ts" x="540" y="258" text-anchor="middle" dominant-baseline="central">orders, refunds; signed webhook</text>
+<line class="arr" x1="222" y1="248" x2="418" y2="248" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<g class="c-amber"><circle cx="320" cy="234" r="9" stroke-width="0.5"/><text class="ts" x="320" y="234" text-anchor="middle" dominant-baseline="central">14</text></g>
+<g class="c-purple"><rect x="20" y="330" width="200" height="190" rx="16" stroke-width="0.5"/>
+<text class="th" x="120" y="354" text-anchor="middle" dominant-baseline="central">Vendor-admin service</text>
+<text class="ts" x="120" y="372" text-anchor="middle" dominant-baseline="central">vendor-api, admin</text>
+</g>
+<rect class="box" x="420" y="344" width="240" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="540" y="360" text-anchor="middle" dominant-baseline="central">Email provider</text>
+<text class="ts" x="540" y="378" text-anchor="middle" dominant-baseline="central">HTTPS or SMTP: new order mail</text>
+<line class="arr" x1="222" y1="368" x2="418" y2="368" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="320" cy="354" r="9" stroke-width="0.5"/><text class="ts" x="320" y="354" text-anchor="middle" dominant-baseline="central">15</text></g>
+<rect class="box" x="420" y="404" width="240" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="540" y="420" text-anchor="middle" dominant-baseline="central">Cloudinary</text>
+<text class="ts" x="540" y="438" text-anchor="middle" dominant-baseline="central">portal uploads, app loads images</text>
+<line class="arr" x1="222" y1="428" x2="418" y2="428" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="320" cy="414" r="9" stroke-width="0.5"/><text class="ts" x="320" y="414" text-anchor="middle" dominant-baseline="central">16</text></g>
+<rect class="box" x="420" y="464" width="240" height="48" rx="8" stroke-width="0.5"/>
+<text class="th" x="540" y="480" text-anchor="middle" dominant-baseline="central">WhatsApp</text>
+<text class="ts" x="540" y="498" text-anchor="middle" dominant-baseline="central">click-to-chat links, no API</text>
+<line class="arr" x1="222" y1="488" x2="418" y2="488" marker-end="url(#arrow)"/>
+<g class="c-amber"><circle cx="320" cy="474" r="9" stroke-width="0.5"/><text class="ts" x="320" y="474" text-anchor="middle" dominant-baseline="central">17</text></g>
+</svg>

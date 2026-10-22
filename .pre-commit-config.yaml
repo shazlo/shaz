@@ -1,0 +1,24 @@
+# Monorepo root. Hooks only touch shazlo-server/ (the Core service).
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.1
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+        files: ^shazlo-server/
+      - id: ruff-format
+        files: ^shazlo-server/
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy (shazlo-server)
+        entry: bash -c 'cd shazlo-server && uv run mypy .'
+        language: system
+        pass_filenames: false
+        files: ^shazlo-server/.*\.py$
+      - id: import-linter
+        name: import-linter (shazlo-server module boundaries)
+        entry: bash -c 'cd shazlo-server && uv run lint-imports'
+        language: system
+        pass_filenames: false
+        files: ^shazlo-server/.*\.py$
