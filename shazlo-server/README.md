@@ -38,6 +38,8 @@ deploy/            Dockerfile, prod compose, gunicorn, Caddy, Redis confs, OTel 
 | `models.py` | schema | extend `core.models.BaseModel` (uuid pk, timestamps). Constraints in the DB. |
 
 - Expected errors: raise `ApplicationError(message, extra)`. Anything else is a 500 and gets reported.
+- Module boundaries are enforced by import-linter (`uv run lint-imports`, part of `make lint` and CI): layers only depend downward, and pure logic (`feed/taste.py`, `feed/mix.py`) imports no framework.
+- Pre-commit lives at the monorepo root and runs ruff, mypy and import-linter for `shazlo-server/` only (`make install` sets it up).
 - Integrations are off unless `USE_<X>=true`.
 - The `auth` app's label is `shazlo_auth` (clashes with `django.contrib.auth` otherwise).
 

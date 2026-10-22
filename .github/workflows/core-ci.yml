@@ -75,6 +75,9 @@ jobs:
       - name: Type check
         run: uv run mypy .
 
+      - name: Module boundaries (import-linter)
+        run: uv run lint-imports
+
       - name: Migrations are up to date
         run: uv run python manage.py makemigrations --check --dry-run
 

@@ -41,6 +41,7 @@ dev = [
     "pytest-django",
     "factory-boy",
     "pre-commit",
+    "import-linter>=2.15",
 ]
 
 [tool.uv]
@@ -71,3 +72,26 @@ django_settings_module = "config.django.test"
 DJANGO_SETTINGS_MODULE = "config.django.test"
 python_files = ["test_*.py"]
 addopts = "-ra --strict-markers"
+
+[tool.importlinter]
+root_packages = ["shazlo"]
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "Domain layers only depend downward"
+type = "layers"
+layers = [
+    "shazlo.api",
+    "shazlo.orders | shazlo.feed",
+    "shazlo.catalog",
+    "shazlo.auth",
+    "shazlo.users",
+    "shazlo.integrations",
+    "shazlo.core",
+]
+
+[[tool.importlinter.contracts]]
+name = "Pure logic stays framework free"
+type = "forbidden"
+source_modules = ["shazlo.feed.taste", "shazlo.feed.mix"]
+forbidden_modules = ["django", "strawberry", "strawberry_django", "redis", "celery", "ninja"]
