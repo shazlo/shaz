@@ -34,6 +34,15 @@ The architecture is settled (`docs/architecture.md`): **Core (Django, `shazlo-se
 5. Parallelise only modules that do not touch (for example feed maths and closets).
 6. Keep the contract (`contracts/`, pinned copy in Core) in sync with the vendor-admin team from week 1.
 
+## Progress
+
+| Phase | Status | Notes |
+| --- | --- | --- |
+| 0. Foundation | **Done locally, 2026-10-22** | 0.1 pgvector compose (by hand), 0.2 vendors and Pinecone removed, 0.3 CI workflow (runs on GitHub once pushed), 0.4 import-linter plus mypy in pre-commit, 0.5 test foundation, 0.6 settings hardening. 10 tests, ruff, mypy, import-linter and the schema-drift check all green locally. Remaining gate: CI green on a pull request after the first push |
+| 1. Identity and auth | Next | |
+
+Deviations from the plan: MinIO was dropped from the local compose (its community image is no longer published); `.pre-commit-config.yaml` moved to the monorepo root with hooks scoped to `shazlo-server/`; the `/internal/*` Caddy rule moves to Phase 6 with the internal API.
+
 ## Task plan (Core, in order)
 
 ### Phase 0: Foundation (Oct 21 to 23)
